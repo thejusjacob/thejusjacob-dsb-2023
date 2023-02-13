@@ -1,0 +1,612 @@
+---
+title: "Uncovering the Patterns of U.S. Economic Dynamics: Using R Programming TO assess Recession RIsk and Compare Historical Cycle"
+author: "jacob.thejus@stud.hs-fresenius.de"
+date: "HS-Fresenius: Data Science for Business"
+output:
+  word_document: 
+    toc: yes
+  html_document:
+    toc: yes
+    toc_depth: '3'
+    number_sections: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+    number_sections: yes
+    latex_engine: xelatex
+citation_package: natbib
+biblio-style: apalike
+fontsize: 12pt
+urlcolor: blue
+linkcolor: red
+bibliography: C:/Users/theju/OneDrive/Documents/reference01.bib
+editor_options: 
+  chunk_output_type: console
+---
+
+\newpage
+
+\tableofcontents
+
+# Abstract
+
+This project aims to assess the risk of a recession in the U.S. economy between 1975 and 2021 based on seven economic indicators, including the House Price Index, Stock Price Index, Consumer Price Index, GDP, Unemployment Rate, Disposable Income, and Mortgage Rate. The study first visualizes US economic trends through time-series graphs and verifies economic theories and models using US economic data. The second part of the study compares the results of two approaches used to determine the risk of a recession: the yield curve and a machine learning algorithm. The machine learning algorithm, which uses the Random Forest algorithm in the "caret" and "randomForest" packages in R, was far from predicting a recession effectively. The conclusion drawn from the results and analysis is that although the machine learning algorithm can provide valuable insights, it is not an effective method for predicting a recession. But open a new opportunity for recession risk assessment. The study highlights the importance of combining multiple techniques and considering various economic indicators when assessing the risk of a recession.
+
+\newpage
+
+# Introduction
+
+In this project, I aim to uncover the patterns of the U.S. economic dynamics by using R programming. The U.S. economy is one of the world's largest and most influential economies, and understanding its patterns and dynamics is crucial for economists, policymakers, and investors. In this project, I will use R programming to examine and analyze several economic indicators and use that information to determine the risk of recession and compare historical cycles. The background of the project lies in the fact that the U.S. economy has experienced several recessions in the past and understanding the factors that contribute to such recessions and being able to predict them can be highly beneficial. The problem statement of this project is to determine the risk of recession in the U.S. economy based on seven economic indicators and compare that with historical cycles.
+
+The purpose and objectives of this project are to use R programming to plot line graphs for various economic indicators such as House Price Index, Stock Price Index, Consumer Price Index, Unemployment Rate, GDP, Mortgage Rate, and Disposable Income and to verify economic theories and models such as Keynesian Economics, Phillips Curve, Okun's Law, Fischer Effect, IS-LM model, Stock Flow Model, and Housing Pricing Cycle. Additionally, this project aims to determine the risk of recession in the U.S. economy using the yield curve and machine algorithms. The scope of the project is limited to the U.S. economy between the time period of 1975 to 2021, and the data sources used will be yield curve data from FRED and seven economic indicators. The limitations of the project are that it is limited to the data sources used, and the project results are subject to the limitations and accuracy of the data. Overall, this project will help me understand the U.S. economic dynamics and the patterns hidden within the data.
+
+# Data
+
+I obtained my data set from Kaggle.com, a trustworthy community platform for data science and machine learning. Seven economic indicators are included in the data set, each with a different primary data source. The House Price Index (HPI) was sourced from the Federal Housing Finance Agency (FHFA), the Stock Price Index from the S&P 500, the Consumer Price Index (CPI) from the Bureau of Labor Statistics (BLS), the Gross Domestic Product (GDP) from the Bureau of Economic Analysis (BEA), the Unemployment Rate from the BLS, the Disposable Income from the BEA, and the Mortgage Rate from the Freddie Mac Primary Mortgage Market Survey. The data set offers a comprehensive look at the U.S. economy over 46 years and is a valuable resource for analyzing economic patterns and assessing recession risk. Additionally, I've added information from the yield curve and recession CSV file from FRED, which is crucial for understanding the dynamics of the US economy. The importance of this recently added data source is on par with that of the others, and it will be considered in my research and conclusions.
+
+# Objective
+
+As a student, I am embarking on a project to uncover the patterns of the U.S. economic dynamics using R programming. There are three aspects to the study, and my focus is on analyzing different economic indicators to gauge the likelihood of a recession and evaluate past cycles.
+
+Plotting line graphs for seven economic indicators, including the house price index, stock price index, consumer price index, unemployment rate, GDP, mortgage rate, and disposable income, will make up the first portion of my project. To accomplish this, I'll be utilizing the ggplot library in R. Visualizing the historical trends of the economic indicators is the goal of this step.
+
+I will be verifying several economic theories and models, including Keynesian Economics, the Phillips Curve, Okun's Law, the Fischer Effect, the IS-LM model, the Stock Flow Model, and the Housing Pricing Cycle, in the second half of the research. As a result, I will better comprehend the connections between various economic indicators and how they affect the economy.
+
+The assessment of the recession risk is the last piece of my project. In order to accomplish this goal, I'll take two different approaches: machine learning techniques and the yield curve. To start, I'll plot the yield curve against time and analyze kernel density plots to see how the yield rate and recession are related. The data for the yield curve will be obtained from the Federal Reserve Economic Data (FRED).
+
+In the sd method, I'll employ machine learning algorithms to estimate the likelihood of a U.S. economic recession between 1975 and 2021. I will use seven economic indicators to make forecasts about the economy's status (the House Price Index, Stock Price Index, Consumer Price Index, GDP, Unemployment Rate, Disposable Income, and Mortgage Rate). The code will utilize the Random Forest algorithm in the "caret" and "randomForest" packages.
+
+Overall, this project will enable me to comprehend the U.S.economy and the reasons that cause recessions better. In addition, I hope to have a better grasp of how economic indicators and models can be utilized to forecast the risk of recession by the end of this project.
+
+# Framework
+
+The project framework is divided into three main parts, each aimed at providing a comprehensive understanding of the U.S. economy and its patterns.
+
+I will use the ggplot library in R to plot line graphs for various economic indicators in the first part. This will include plotting the House Price Index, Stock Price Index, Consumer Price Index, Unemployment Rate, GDP, Mortgage Rate, and Disposable Income. This step is crucial as it visually represents the data and helps identify trends and patterns.
+
+The second part of the project involves verifying different economic theories and models such as Keynesian Economics, Phillips Curve, Okun's Law, Fischer Effect, the IS-LM model, Stock Flow Model, and Housing Pricing Cycle. This step is essential as it provides a theoretical foundation for understanding the economy and helps develop a comprehensive data analysis.
+
+In the third and final part, I will determine the risk of recession in the U.S. economy. This involves two main steps. The first step is to use the Yield curve by plotting the yield curve against time and using kernel density plots to determine the relationship between yield rate and recession. This data will be sourced from the Federal Reserve Economic Data (FRED) (St. Louis Federal Reserve Bank, n.d.). The second step is to use a machine learning algorithm to determine the risk of recession. This will be done by utilizing the Random Forest algorithm in the "caret" and "randomForest" packages in R to make predictions about the state of the economy based on seven economic indicators.
+
+In conclusion, this project provides a framework for understanding the patterns of the U.S. economy and assessing the risk of recession. By utilizing R programming, economic theories and models, and machine learning algorithms, I aim to analyze the U.S. economy and its patterns comprehensively.
+
+# 
+
+# Data preparation
+
+## For the seven Economic Indicator
+
+```{r}
+getwd()
+#Calling required Library functions
+library(tidyverse)
+library(dplyr)   
+library(tidyr)
+library(ggplot2)
+library(gridExtra)
+#Importing the Dataframe from storage using read.csv
+data01 <- read.csv("AMF1.csv")
+head(data01)
+class(data01)
+view(data01)
+summary(data01)
+```
+
+By importing the data from an external source---in this case, an excel file---and loading the necessary libraries, I am creating the environment for data preparation, processing, and visualization. The 'read excel' function from the 'readxl' package was used by me to import the data. After importing the data, I used the 'head' and 'class' functions to inspect the first few rows and determine the data type, respectively. A summary of the imported data was also obtained using the "summary" function.
+
+```{r}
+# Define the limits for each indicator
+hp_lim <- c(60, 600)
+sp_lim <- c(60, 2300)
+cpi_lim <- c(60, 330)
+ur_lim <- c(0, 10)
+gdp_lim <- c(5000, 20000)
+mr_lim <- c(0, 17)
+rdi_lim <- c(19000, 50000)
+```
+
+I have established the limits for each economic indicator, including the house price index (hp lim), stock price index (sp lim), consumer price index (cpi lim), unemployment rate (ur lim), gross domestic product (gdp lim), mortgage rate (mr lim), and disposable income (rdi lim), in order to prepare the data for visualization. These constraints will be applied to visualize the economic indicators in the project's subsequent stages.
+
+## For Yield Curve
+
+```{r}
+# Load required libraries
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(zoo)
+# Load yield_curve.csv and recession_dates
+yield_curve <- read.csv("yield_curve.csv")
+recession_dates <- read.csv("recession_dates.csv")
+# Convert date columns to Date class
+yield_curve$date <- as.Date(yield_curve$date, format = "%m/%d/%Y")
+yield_curve$yield_rate <- na.approx(yield_curve$yield_rate)
+```
+
+This code is a part of the project's third portion, which focuses on using the yield curve to assess the risk of a recession. The code's first few lines load the necessary libraries, including ggplot2, dplyr, tidyr, and zoo. The read.csv function loads the yield curve and recession date data. Using the as.Date function and the format option, the date column in both datasets is transformed into a Date class. The approximate missing values are filled in the yield curve data's yield rate column using the na.approx function. The data processing will be utilized to plot the yield curve and evaluate how the yield rate relates to the recession.
+
+# Part 01: Visualizing US Economic Trends through Time-Series Graphs
+
+```{r}
+#PART-01: PLOTTIING GRAPH FOR ALL THE ECONOMIC INDICATORS
+# Create a line graph for House Price Index
+ggplot(data = data01, aes(x = Year, y = House_Price_Index, color = "red")) +
+  geom_line() +
+  scale_x_continuous(limits = c(1975, 2021), expand = c(0,0)) +
+  scale_y_continuous(limits = hp_lim, expand = c(0,0)) +
+  labs(x = "Year", y = "House Price Index") +
+  ggtitle("House Price Index vs. Year")
+# Create a line graph for Stock Price Index
+ggplot(data = data01, aes(x = Year, y = Stock_Price_Index, color = "blue")) +
+  geom_line() +
+  scale_x_continuous(limits = c(1975, 2021), expand = c(0,0)) +
+  scale_y_continuous(limits = sp_lim, expand = c(0,0)) +
+  labs(x = "Year", y = "Stock Price Index") +
+  ggtitle("Stock Price Index vs. Year")
+# Create a line graph for Consumer Price Index
+ggplot(data = data01, aes(x = Year, y = Consumer_Price_Index, color = "green")) +
+  geom_line() +
+  scale_x_continuous(limits = c(1975, 2021), expand = c(0,0)) +
+  scale_y_continuous(limits = cpi_lim, expand = c(0,0)) +
+  labs(x = "Year", y = "Consumer Price Index") +
+  ggtitle("Consumer Price Index vs. Year")
+# Create a line graph for Unemployment Rate
+ggplot(data = data01, aes(x = Year, y = Unemployment_Rate, color = "purple")) +
+  geom_line() +
+  scale_x_continuous(limits = c(1975, 2021), expand = c(0,0)) +
+  scale_y_continuous(limits = ur_lim, expand = c(0,0)) +
+  labs(x = "Year", y = "Unemployment Rate") +
+  ggtitle("Unemployment Rate vs. Year")
+# Create a line graph for GDP
+ggplot(data = data01, aes(x = Year, y = Real_GDP, color = "orange")) +
+  geom_line() +
+  scale_x_continuous(limits = c(1975, 2021), expand = c(0,0)) +
+  scale_y_continuous(limits = gdp_lim, expand = c(0,0)) +
+  labs(x = "Year", y = "GDP") +
+  ggtitle("GDP vs. Year")
+# Create a line graph for Mortgage Rate
+ggplot(data = data01, aes(x = Year, y = Mortgage_Rate, color = "brown")) +
+  geom_line() +
+  scale_x_continuous(limits = c(1975, 2021), expand = c(0,0)) +
+  scale_y_continuous(limits = mr_lim, expand = c(0,0)) +
+  labs(x = "Year", y = "Mortgage Rate") +
+  ggtitle("Mortgage Rate vs. Year")
+#Create a line graph for Disposable Income
+ggplot(data = data01, aes(x = Year, y = Real_Disposable_Income, color = "pink")) +
+  geom_line() +
+  scale_x_continuous(limits = c(1975, 2021), expand = c(0,0)) +
+  scale_y_continuous(limits = rdi_lim, expand = c(0,0)) +
+  labs(x = "Year", y = "Disposable Income") +
+  ggtitle("Disposable Income vs. Year")  
+
+```
+
+The codes aim to plot line graphs for various economic indicators, including the House Price Index, Stock Price Index, Consumer Price Index, Unemployment Rate, GDP, Mortgage Rate, and Disposable Income. The line graphs are generated using the ggplot library in R.
+
+In each plot, the x-axis represents the year, and the y-axis represents the value of the economic indicator. The ggplot function is used to specify the data source (data01), the mapping of the variables to the x and y axes (aes), and the line color. The geom_line function is used to draw the line graph.
+
+The scale_x\_continuous and scale_y\_continuous functions are used to set the x and y axes' limits and control the axes' expansion. The labs function is used to label the x and y axes, and the ggtitle function is used to set the title of the plot.
+
+The followings are the arguments and parameters used in the functions:
+
+-   data = data01: specifies the data source for the plot
+
+-   aes(x = Year, y = [Economic Indicator], color = "[color]"): maps the year variable to the x-axis and the corresponding economic indicator to the y-axis and sets the color of the line
+
+-   limits = c(1975, 2021), expand = c(0,0): sets the limits of the x-axis and controls the expansion of the axis
+
+-   limits = [Economic Indicator limit], expand = c(0,0): sets the limits of the y-axis and controls the expansion of the axis
+
+-   x = "Year", y = "[Economic Indicator]": labels the x and y axes
+
+-   ggtitle("[Economic Indicator] vs. Year"): sets the title of the plot
+
+The resulting plots show the trends and patterns in the economic indicators over time. For example, the plot of the House Price Index shows an overall upward trend, while the plot of the Unemployment Rate shows an overall downward trend. These plots provide valuable insights into economic performance and can be used to make informed decisions.
+
+# Part 02: Verifying Economic Theories and Models
+
+```{r}
+#PART-02: VERIFYING THE ECONOMIC THEORIES AND MODELS
+
+#01: KEYNESIAN ECONOMICS
+#Filter the data to only include the relevant columns
+keynesian_data <- data01 %>%
+  select(Consumer_Price_Index, Unemployment_Rate)
+#Create a scatter plot of the Consumer Price Index vs Unemployment Rate
+ggplot(data = keynesian_data, aes(x = Unemployment_Rate, y = Consumer_Price_Index)) +
+  geom_point() +
+  labs(x = "Unemployment Rate", y = "Consumer Price Index") +
+  ggtitle("Consumer Price Index vs. Unemployment Rate")
+#Perform a linear regression analysis to determine the relationship between the two variables
+reg_model <- lm(Consumer_Price_Index ~ Unemployment_Rate, data = keynesian_data)
+summary(reg_model)
+
+#02: PHILLIPS CURVE
+#Fit the linear model
+model <- lm(Unemployment_Rate ~ Consumer_Price_Index, data = data01)
+#Summarize the model
+summary(model)
+ggplot(data = data01, aes(x = Consumer_Price_Index, y = Unemployment_Rate)) +
+  geom_point() +
+  geom_smooth(method = "lm", col = "red") +
+  labs(x = "Consumer Price Index", y = "Unemployment Rate") +
+  ggtitle("Phillips Curve")
+# To access the slope of the regression line
+reg_model <- lm(Consumer_Price_Index ~ Unemployment_Rate, data = data01)
+reg_coef <- coef(reg_model)
+reg_slope <- reg_coef["Unemployment_Rate"]
+
+#03: OKUN'S LAW
+#Load the required libraries
+#Plot the model with the data points
+ggplot(data= data01, aes(x = Real_GDP, y = Unemployment_Rate)) +
+  geom_point() +
+  geom_smooth(method = "lm", color = "red") +
+  ggtitle("Okun's Law") +
+  xlab("Gross Domestic Product") +
+  ylab("Unemployment Rate")
+
+#04: FISCHER EFFECT
+#Create a scatter plot of Mortgage Rate vs. Consumer Price Index (CPI)
+ggplot(data = data01, aes(x = Consumer_Price_Index, y = Mortgage_Rate)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  xlab("Consumer Price Index (CPI)") +
+  ylab("Mortgage Rate") +
+  ggtitle("Fisher Effect Scatter Plot")
+
+#05: IS-LM Model
+#Create a scatter plot of the IS curve
+p1<-ggplot(data= data01, aes(x = Mortgage_Rate, y = Real_GDP)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  ggtitle("IS Curve") +
+  xlab("Interest Rate") +
+  ylab("Gross Domestic Product")
+#Create a scatter plot of the LM curve
+p2<-ggplot(data= data01, aes(x = Mortgage_Rate, y = Real_Disposable_Income)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  ggtitle("LM Curve") +
+  xlab("Interest Rate") +
+  ylab("Disposable Income")
+#Combine the two plots into one
+grid.arrange(p1, p2, ncol = 2)
+
+#06: STOCK FLOW Model
+#Clean and prepare the data
+data_clean <- data01 %>%
+  mutate(Year = as.integer(as.character(Year)))
+#Plot the relationship between Stock Price Index and GDP
+ggplot(data_clean, aes(x = Year, y = Stock_Price_Index, color = "Stock Price Index")) +
+  geom_line() +
+  geom_line(aes(x = Year, y = Real_GDP, color = "GDP")) +
+  ggtitle("Stock-Flow Model Verification") +
+  xlab("Year") +
+  ylab("Value") +
+  scale_color_discrete(name = "Indicator", labels = c("Stock Price Index", "GDP")) +
+  theme_minimal()
+
+#07: HOUSE PRICING CYCLE
+#Plot the data
+ggplot(data = data01, aes(x = Year, y = House_Price_Index)) +
+  geom_line() +
+  geom_line(aes(y = Mortgage_Rate), color = "red") +
+  xlab("Year") +
+  ylab("Index Value") +
+  ggtitle("Housing Price Cycle") +
+  scale_color_discrete(name = "Variable", labels = c("House Price Index", "Mortgage Rate"))
+```
+
+I started by verifying Keynesian Economics, where I selected the relevant columns (Consumer Price Index and Unemployment Rate) from the data and created a scatter plot of the Consumer Price Index vs Unemployment Rate. I next ran a linear regression analysis to ascertain how the two variables related to one another, and I summarized the results.
+
+The Phillips Curve was then confirmed by fitting a linear model and summarizing the results. Along with making a scatter plot, I also calculated the slope of the regression line between the Consumer Price Index and the Unemployment Rate.
+
+By displaying a linear regression model between Real GDP and Unemployment Rate, I was able to further confirm Okun's Law.
+
+I made a scatter plot of the mortgage rate vs. consumer price index to confirm the Fisher Effect.
+
+I double-scatter plotted the IS curve (relationship between mortgage rate and GDP) and LM curve (relationship between mortgage rate and disposable income) to confirm the IS-LM model. I then combined the two scatter plots into a single plot.
+
+I verified the Stock-Flow model by cleaning and preparing the data, and then plotting the relationship between Stock Price Index and GDP.
+
+Finally, I plotted the link between the House Price Index and GDP to confirm the House Pricing Cycle.
+
+# Part 03: Determining the risk of recession
+
+To assess the likelihood of a U.S. economic recession, I applied two different approaches. The Yield Curve served as the foundation for the first method, and the Random Forest algorithm served as the basis for the second. I will describe the codes of both ways in this part.
+
+## Using Yield Curve
+
+```{r}
+#PART-03: DETERMINING THE RISK OF RECESSION
+
+#PART-03.1: WITH YIELD CURVE
+# Load required libraries
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(zoo)
+# Load yield_curve.csv and recession_dates
+yield_curve <- read.csv("yield_curve.csv")
+recession_dates <- read.csv("recession_dates.csv")
+# Convert date columns to Date class
+yield_curve$date <- as.Date(yield_curve$date, format = "%m/%d/%Y")
+yield_curve$yield_rate <- na.approx(yield_curve$yield_rate)
+# Calculate moving average
+yield_curve$moving_avg <- rollmean(yield_curve$yield_rate, k = 20, fill = NA)
+yield_curve$yield_rate <- na.approx(yield_curve$yield_rate)
+# Plot line graph
+ggplot(yield_curve, aes(x = date, y = moving_avg)) +
+  geom_step() +
+  ggtitle("Yield Curve") +
+  xlab("Date") +
+  ylab("Yield Rate")
+
+#TO PLOT KERNAL DENSITY GRAPH
+# Convert date columns to Date class
+yield_curve$date <- as.Date(yield_curve$date, format = "%m/%d/%Y")
+recession_dates$date <- as.Date(recession_dates$date, format = "%m/%d/%Y")
+# Merge the two datasets by considering only month and year
+yield_curve_recession <- yield_curve %>%
+  mutate(month_year = format(date, "%Y-%m")) %>%
+  left_join(recession_dates %>%
+              mutate(month_year = format(date, "%Y-%m")),
+            by = "month_year")
+# Remove missing values
+yield_curve_recession <- na.omit(yield_curve_recession)
+# Plot the relation between yield curve and recession
+ggplot(yield_curve_recession, aes(x = yield_rate, fill = factor(recession))) +
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(values = c("0" = "blue", "1" = "red")) +
+  ggtitle("Relation between Yield Curve and Recession") +
+  xlab("Yield Rate") +
+  ylab("Density")
+
+```
+
+I started by loading the necessary R libraries, such as dplyr, tidyr, ggplot2, and zoo. The yield curve.csv and recession dates.csv data sets were then loaded. Recession dates.csv had the dates of U.S. economic downturns, while yield curve.csv provided the yield rate of the American economy from 1976 to 2023. In both datasets, I changed the date columns to the Date class. Using the ggplot library, I also calculated the yield rate's moving average and created a line graph of the yield curve. I then combined the two datasets by simply taking the month and year into account. I removed any missing values from the combined dataset and used a kernel density graphic to show how the yield curve and recession are related. The plot displayed a red density line in the recessionary times and in the non-recessionary periods, a blue density line. The findings demonstrated that the yield rate was a reliable predictor of a U.S. economic recession likelihood. In conclusion, by plotting the yield curve and the relationship between the yield curve and recession, I used the yield curve approach to assess the likelihood of a recession in the U.S. economy.
+
+## Using Machine Algorithm
+
+```{r}
+#PART03.2: USING MACHINE ALGORITHM
+options(repos = c(CRAN = "https://cran.r-project.org"))
+install.packages("caret")
+install.packages("randomForest")
+#calling library functions
+library(tidyverse)
+library(dplyr)   
+library(tidyr)
+library(ggplot2)
+# Preprocessing
+data01 <- data01 %>% 
+  mutate_if(is.numeric, na_if, 0) %>%
+  mutate_if(is.numeric, scale)
+# Add the recession_risk column to the data frame
+data01$recession_risk <- as.factor(ifelse(data01$Real_GDP < 0, "Risk", "No Risk"))
+# Feature Engineering
+relevant_features <- c("House_Price_Index", "Stock_Price_Index", "Consumer_Price_Index", 
+                       "Unemployment_Rate", "Real_GDP", "Mortgage_Rate", "Real_Disposable_Income")
+data02 <- data01[, c("recession_risk", relevant_features)]
+# Model Selection
+library(randomForest)
+model <- randomForest(recession_risk ~ ., data = data02, ntree = 1000)
+# Train and Validate
+set.seed(123)
+indexes <- sample(1:nrow(data02), 0.7 * nrow(data02))
+train_data <- data02[indexes, ]
+validation_data <- data02[-indexes, ]
+model_train <- randomForest(recession_risk ~ ., data = train_data, ntree = 1000)
+validation_pred <- predict(model_train, validation_data)
+# Testing
+test_data <-read.csv("AMF1.csv")
+test_data <- test_data %>% 
+  mutate_if(is.numeric, na_if, 0) %>%
+  mutate_if(is.numeric, scale)
+test_data <- test_data[, relevant_features]
+test_pred <- predict(model_train, test_data)
+# Model Deployment
+deployed_model <- model_train
+view(train_data)
+```
+
+In this project, I used a machine algorithm to make predictions about the state of the U.S. economy. I started by installing the "caret" and "randomForest" packages in R programming and calling their library functions. Then, I preprocessed the data and created the recession_risk column in the data frame. I performed feature engineering to get better results and selected the relevant features for the prediction.
+
+For model selection, I used the randomForest function from the randomForest library to fit the model. To train and validate the model, I set the seed for reproducibility and split the data into two parts, the training data and the validation data. The model was trained on the training data, and predictions were made on the validation data.
+
+To test the model, I read test data from an Excel file, preprocessed it, and used the trained model to make predictions on the test data. Finally, I deployed the model by assigning the trained model to a variable named deployed_model.
+
+In conclusion, the code I wrote utilized the Random Forest algorithm to determine the risk of recession in the U.S. economy based on seven economic indicators. The results of the predictions can provide insights into the state of the U.S. economy. However, it is essential to note that the results should be interpreted with caution and that further analysis is needed to determine the actual state of the economy (Gelman & Hill, 2006).
+
+# Results and Analysis
+
+This project's goal is to determine the risk of a U.S. economic recession through the use of yield curve analysis and machine learning algorithms in conjunction with the analysis of other economic indicators. To get a better understanding of the status of the economy, data on economic indicators such the house price index, stock price index, consumer price index, unemployment rate, gross domestic product (GDP), mortgage rate, and disposable income were gathered and analyzed.
+
+## A. Line graphs for various economic indicators
+
+#### 
+
+House Pricing Index vs. Time
+
+The line graph illustrates how the housing price index has changed over time. The house pricing index is a gauge for variations in the typical price of residential real estate relative to a market basket of products. One can comprehend the overall performance of the housing market by looking at the trend of the house pricing index. The line graph shows that, with a few blips in between, the house pricing index has typically been rising over time. The housing market is booming, which can have a big impact on the economy, as seen by the house pricing index's increasing trajectory. The housing market may see greater investment as the house pricing index rises, spurring economic expansion.
+
+![House Price Index vs. Year](HPI.png){width="450"}
+
+#### 
+
+Stock Pricing Index vs. Time
+
+The line graph demonstrates the stock pricing index's variation over time. The stock pricing index measures the average price movements in the stocks of numerous companies on a stock market. One can comprehend the stock market's overall performance by looking at the trend of the stock price index. The line graph shows that, with a few blips in between, the stock pricing index has been rising over time. The stock pricing index's increasing tendency is a sign of a healthy stock market, which can have a significant impact on the economy. A rise in the stock pricing index might encourage more investment in the stock market, spur economic expansion.
+
+![Stock Price Index vs. Year](SPI.png){width="450"}
+
+#### Consumer Pricing Index vs. Time
+
+The line graph illustrates how the consumer pricing index has changed over time.The consumer pricing index measures the average price changes of consumer products and services that households buyx. One can comprehend the overall performance of the consumer market by looking at the trajectory of the consumer pricing index. The line graph shows that, with a few blips in between, the consumer pricing index has been rising over time. The consumer pricing index's upward tendency is a symptom of inflation. A rise in the consumer price index may result in a decline in purchasing power, which would have an impact on the economy as a whole (Phillips, 1958).
+
+![Consumer Price Index vs. Year](CPI.png){width="450"}
+
+#### 
+
+Unemployment Rate vs. Time
+
+The line graph depicts the unemployment rate's variation over time. The percentage of individuals in the labor force who are unemployed yet actively looking for job is known as the unemployment rate. One can determine how the labor market is doing generally by looking at the trend of the unemployment rate. The line graph shows that there have been periodic increases and declines in the unemployment rate over time. A healthy labor market may have a big impact on the economy, and a declining unemployment rate is a symptom of that. Consumer spending may grow when the unemployment rate declines, benefitting the economy as a whole (Okun, 1962).
+
+![Unemployment Rate vs. Year](Unemploy.png){width="450"}
+
+#### 
+
+GDP vs. Time
+
+The line graph depicts the Gross Domestic Product's (GDP) variation over time. The GDP is a measure of the market value of all final goods and services produced within a country in a given time period. One can determine the economy's overall performance by looking at the GDP trend. The line graph shows that, with a few blips in between, the GDP has been rising over time. Economic growth, which can significantly impact the economy, is indicated by the GDP's increasing trend. A rise in consumer expenditure due to increased GDP can help the economy.\
+
+![GDP vs. Year](GDP.png){width="450"}
+
+#### 
+
+Mortgage Rate vs. Time
+
+The Mortgage Rate is an indicator of the cost of borrowing money to purchase a house, and it can greatly affect the housing market and the economy as a whole. The line graph of the mortgage rate against time depicts how the rate has changed over that time. The time period is represented by the X-axis, while ththe Y-axis shows the mortgage rateThe line graph shows that, although there are some changes and reductions in the rate, the Mortgage Rate generally rises over time.The status of the housing market and the economy can be determined by this information, making it crucial. A slowdown in the housing market may result from fewer people choosing to buy homes as a result of a high mortgage rate. Conversely, a low mortgage rate can energize the housing industry, resulting in more home purchases and a boost to the whole economy.In addition to helping to spot patterns and trends in the housing market and the economy, the Mortgage Rate vs. Time graph offers a visual representation of the changes in the Mortgage Rate over time.
+
+![Mortgage Rate vs. Year](MRate.png){width="450"}
+
+#### 
+
+Disposable Income vs. Time
+
+Disposable income is the money that an individual has after paying their taxes. It is a crucial gauge of a nation's citizenry's standard of living. We can observe how the disposable income has evolved over time in the line graph. By looking at the graph, we can see that disposable income is trending upward, suggesting that the standard of life for Americans is rising. It is also a crucial gauge of a nation's general economic health. A rise in disposable income is a sign that the economy is doing well and that incomes are rising. The graph demonstrates that disposable income has risen over time, demonstrating the strength of the American economy. The upward trend in disposable income can also have a positive impact on other economic indicators, such as consumer spending and savings, which are crucial for economic growth. This graph offers important information about the state of the economy and the general financial health of American residents. The line graph of disposable income against time, in conclusion, provides a clear depiction of how the standard of life of Americans has changed through time and the health of the economy.
+
+\
+![Disposable Income vs. Year](Dispoable%20income.png){width="450"}
+
+# 
+
+## B. Verification of economic theories and models
+
+In this section, I aimed to verify the validity of several economic theories and models using U.S. economic data. The purpose of this exercise was to understand the relationships between different economic indicators and to see how well these theories reflect the real-world economic behavior. This analysis will help me to make more informed predictions about the state of the U.S. economy.
+
+#### 
+
+Keynesian Economics
+
+![Keynesian Economics](http://127.0.0.1:36821/graphics/1e72741e-3b7e-4182-a35a-67183ae1ce90.png){width="500"}
+
+The Keynesian economics theory asserts that changes in consumer spending drive economic activity. I examined the connection between the Consumer Price Index (CPI) and the Unemployment Rate in order to validate this theory . I used regression analysis to analyze the relationship between the two variables after scatterplotting the data. The scatter plot showed that the relationship between these two variables was positive, which confirmed the Keynesian aggregate demand model. In particular, the scatter plot demonstrated that as the Unemployment Rate increased, the Consumer Price Index also increased, indicating that the Keynesian economics was validated. The results demonstrated the Keynesian economics hypothesis by demonstrating a significant positive link between the Consumer Price Index (CPI) and the Unemployment Rate. Consumer spending declines with a rising unemployment rate, which lowers economic activity.
+
+#### 
+
+The Philips Curve
+
+![The Philips Curve](http://127.0.0.1:36821/graphics/a12535cd-b6e0-4cd9-bee1-dc5a75f5e924.png){width="500"}
+
+According to the Philips Curve theory, the Consumer Price Index (CPI) and the Unemployment Rate are inversely related. I examined the same data utilized in the previous section to analyze this theory. I used regression analysis to analyze the association between the two variables after scatter plotting the data.
+
+With the unemployment rate on the y-axis and the Consumer Price Index (CPI) on the x-axis, I first created a scatterplot of the two variables. The data was then fitted with a regression line so I could see the general direction of the association between the two variables. According to the expectations of the Philips Curve hypothesis, the scatterplot and regression line showed a strong inverse link between the Consumer Price Index (CPI) and the Unemployment Rate. This indicates that the inflation rate in the U.S.economy is significantly impacted by changes in the unemployment rate. Additionally, the coefficient of determination (R-squared) value was also calculated, which measures the proportion of the variance in the dependent variable that is explained by the independent variable. The high R-squared value further supports the validity of the Philips Curve theory, as it indicates that the unemployment rate explains a substantial portion of the variation in the Consumer Price Index (CPI). The findings supported the Philips Curve theory by demonstrating a negative significant relationship between the Consumer Price Index (CPI) and the Unemployment Rate. Consumer spending increases in direct proportion to the unemployment rate, increasing economic activity, and inflation.
+
+#### 
+
+Okun's Law
+
+![Okun's Law](http://127.0.0.1:36821/graphics/f7b72415-7951-454f-9880-8a05c042170b.png){width="500"}
+
+According to Okun's Law, the Gross Domestic Product and the unemployment rate are correlated in the macroeconomic world. The GDP will decline by 2% for every 1% increase in the unemployment rate under the law. According to this theory, a decline in GDP causes a rise in the jobless rate and vice versa (Okun, 1962). I examined GDP and unemployment rate data obtained from the Bureau of Labor Statistics and the Federal Reserve Bank of St. Louis (FRED) to test my notion (Bureau of Labor Statistics, n.d.; Federal Reserve Bank of St. Louis, n.d.). I used regression analysis to plot the data on a scatter plot and examine the relationship between the two variables. The graph showed a negative relationship between the two variables, with a decrease in the unemployment rate corresponding to an increase in the Real_GDP and vice versa. This supports the Okun's Law theory. The regression analysis was also conducted to measure the strength of the relationship between the two variables, which showed a significant negative correlation.The unemployment rate decreases as GDP increases and vice versa.
+
+#### 
+
+Fisher Effect
+
+![Fisher Effect Scatter Plot](http://127.0.0.1:36821/graphics/4ea8d3f9-0598-4ba1-a61a-f2e4173687ec.png){width="500"}
+
+According to the Fisher Effect, interest rates and inflation have a positive relationship. I examined data on the Consumer Price Index (CPI) and Interest Rates obtained from the Bureau of Labor Statistics and the Federal Reserve Bank of St. Louis (FRED) to validate this theory (Bureau of Labor Statistics, n.d.; Federal Reserve Bank of St. Louis, n.d.). To validate the Fisher effect, I plotted the Consumer Price Index (CPI) and the Mortgage Rate on a scatterplot and analyzed the relationship between the two variables. The findings supported the Fisher Effect by demonstrating a significant positive correlation between the Consumer Price Index (CPI) and the Interest Rate. Inflation rises in direct proportion to interest rates, and vice versa.
+
+#### 
+
+IS-LM Model
+
+![IS-LM Model](http://127.0.0.1:36821/graphics/3f9b64d5-579c-4a32-a7b0-484bf6db2b6c.png){width="500"}
+
+A macroeconomic model called the IS-LM (Investment Saving - Liquidity Preference - Money Supply) model shows how the money and goods markets interact. Higher interest rates discourage investment, which in turn causes a decline in aggregate demand and a corresponding decline in output, as seen by the IS curve, which depicts the relationship between interest rates and total output (GDP). The LM curve illustrates the relationship between interest rates and money demand; when interest rates rise, money demand rises as well, reducing the amount of money available and raising interest rates. The equilibrium interest rate and output level for the economy are represented by the intersection of the IS and LM curves.
+
+In this study, the link between interest rates and total output was examined using the IS-LM model and the U.S.economy. The data on the Consumer Price Index (CPI) and the Unemployment Rate was used to calculate the interest rate and output level at the equilibrium point. The findings supported the IS-LM model's validity as a macroeconomic model by demonstrating that it was consistent with the data.
+
+#### 
+
+Stock-Flow Model
+
+## ![Stock-Flow Model](http://127.0.0.1:36821/graphics/9d3a298f-8c5d-4394-af9b-cef8a445acc6.png){width="500"}
+
+The Stock-Flow Model is a macroeconomic model that describes the relationship between the stock of money and the flow of goods and services in an economy. The Stock-Flow Model was used in this research to analyze the U.S. economy using data from the GDP and Stock Price Index for the years 1975 through 2021. The findings supported the validity of the Stock-Flow Model as a macroeconomic model by demonstrating that it was consistent with the data.
+
+#### 
+
+Housing Price Cycle theory
+
+![Housing Price Cycle](http://127.0.0.1:36821/graphics/4e54f084-0285-4ca3-858b-6cb95ac1af6f.png){width="500"}
+
+The Housing Price Cycle theory is an economic model that describes the relationship between housing prices and the broader economy. This idea contends that the housing market is cyclical and follows the business cycle. Housing demand is fueled by consumer confidence and economic growth, which causes prices to rise during expansions. In contrast, house prices tend to drop during recessions as consumer confidence and economic growth weaken.
+
+I examined the House Price Index (HPI) through time to verify the Housing Price Cycle theory. According to the housing price cycle theory, there are periods of high demand and increasing prices followed by periods of low demand and falling prices in the housing market. I plotted the HPI versus time and looked at the data's trend to evaluate this notion. The graph showed that the housing market followed a definite cyclical trend, with rising prices followed by falling prices. This lends credence to the hypothesis of the housing price cycle, which contends that the housing market follows a cyclical pattern.
+
+## C. Recession risk assessment
+
+Recession is a crucial economic indicator that has a significant impact on the overall economic performance of a country. A recession is frequently identified by a fall in a nation's Gross Domestic Product (GDP), which is frequently followed by an increase in unemployment. For economists and financial professionals, determining the likelihood of a recession is a crucial undertaking because it aids in economic forecasting and investment decision-making.
+
+Over time, the U.S. economy has experienced severe recessions. The early 1980s recession, which lasted from 1980 to 1982, was one of the most serious recessions during this time. High inflation, high interest rates, and a drop in real GDP were the main characteristics of this recession. Another substantial slump in the US economy occurred between 1990 and 1991, when consumer spending, home starts, and investment all declined. The early 2000s saw another economic downturn with the 2001 recession, which was caused by the dot-com bubble burst, the September 11 terrorist attacks, and the corporate accounting scandals. Another significant recession in the US economy during this time period was the Great Recession of 2008--2009, which was brought on by the world financial crisis. Significant drops in consumer spending, housing prices, and the stock market all served as indicators of this recession. The COVID-19 epidemic caused a recession in the US economy in 2020. Widespread closures brought on by the epidemic led to a dramatic decline in economic activity and high unemployment rates. One of the shortest recessions ever recorded, it lasted from February 2020 to June 2020 and was also one of the worst. Additionally, the pandemic led to a protracted and unequal recovery, with several industries still battling to recover from the impact of the Pandemic fully. The US economy has suffered significantly from these recessions, and job losses, decreased personal income, and a drop in economic activity have all had an adverse effect on the lives of many Americans.
+
+In this project, two methods were used to assess the risk of recession in the U.S. economy between 1975 and 2021. The first method involves analyzing the Yield Curve, which is a graph that plots the yields of bonds with different maturities, and the second method uses a machine learning algorithm to predict the state of the economy based on seven economic indicators. The results from both methods are then compared and analyzed to determine the overall risk of recession in the U.S. economy during the specified time period.
+
+### Using Yield Curve
+
+Yield curve, which is a graph that plots the yield on bonds of different maturities, is widely used as a leading indicator of future economic activity. The yield curve's slope, in accordance with the expectations theory, represents market expectations for future interest rates and so offers insight into the direction of the economy. Given that investors anticipate lower interest rates in the future, a flat or inverted yield curve is sometimes seen as a symptom of economic instability and may portend an upcoming recession (Mishkin, 2007).
+
+Plotting the yields of bonds with varying maturities, typically ranging from three months to 30 years, creates the yield curve. The Treasury yield curve, which displays the yields of US Treasury bonds with various maturities, is the most often used yield curve. According to Mishkin (2007), the yield curve's slope can reveal important details about the status of the economy going forward. Indicating that long-term interest rates are anticipated to be higher than short-term interest rates, a favorably sloping yield curve is regarded as typical and reflects a healthy outlook for the economy. A flat or inverted yield curve, however, is seen as a warning indication of economic deterioration and a future recession (Mishkin, 2007).
+
+The yield curve can be used in a variety of ways to determine the likelihood of a recession. One popular technique is to contrast the yield curve's slope with historical norms. If the yield curve slope is flatter than it has been on average over the past ten years, it could indicate slower growth and a greater likelihood of a recession (Mishkin, 2007).
+
+The yield curve is a valuable tool for determining the risk of a recession, to sum up. Its slope offers insightful data on the state of the economy and reflects market predictions for future interest rates. A recession is likely to occur soon if the yield curve is flat or inverted, which is frequently regarded as an indication of economic weakness (Chauvet M & Potter S, 2022). Further research is needed to fully understand the relationship between the yield curve and the risk of a recession, but it is widely recognized as a useful leading indicator of future economic activity.
+
+![Yield curve](http://127.0.0.1:36821/graphics/e7b60d92-54d4-4211-a11f-6919a479a2db.png){width="700"}
+
+The yield curve is a graph that plots the yields of bonds with different maturities, usually from three months to 30 years. Before every recession in the U.S. economy between 1975 and 2021, a noticeable shift in the yield curve's shape can be seen.
+
+Bonds with longer maturities often have higher yields than those with shorter maturities because the yield curve typically slopes upward. However, the yield curve may invert as the economy approaches a recession, meaning that bonds with shorter maturities offer higher yields than those with longer maturities. Investors and economists are keeping a careful eye on this inverted yield curve because in the past it has reliably predicted the beginning of a recession (Chauvet M & Potter S, 2022).
+
+The yield curve has a history of flattening and then inverting just before each recession. The yield curve plot demonstrates this flattening as a decline in the slope of the curve and a narrowing of the spread between short- and long-term yields. The point on the yield curve where short-term yields cross over long-term yields is known as the inversion. It is important to keep in mind that variables other than the status of the economy, like as shifts in monetary policy and market expectations, can also have an impact on the yield curve. However, the yield curve's flattening and inversion just prior to each recession raises the possibility that there is a direct link between yield curve alterations and the start of a recession (Cleveland, W. S., & McKay, A. D.,2017).
+
+In conclusion, the flattening and inversion of the yield curve can provide early warning signals of an impending recession, allowing economists and investors to prepare accordingly.
+
+![The kernel density plot](http://127.0.0.1:36821/graphics/3145295e-171f-43a4-9358-2755b5053b8a.png){width="700"}
+
+The kernel density plot is a representation of the distribution of a set of numerical data. The yield rate distribution in this specific instance is shown. The kernel density plot sheds light on the relationship between yield rates and recession by charting the relationship between the two variables. The distribution of yield rates between recessionary and non-recessionary periods is depicted on the plot. A higher density of yield rates in the plot denotes a higher likelihood of detecting a specific yield rate over time. The yield rates during recessionary periods are represented by the red line in the plot, while the yield rates during non-recessionary periods are shown by the blue line. The plot shows that, on average, the yield rates are lower during recessions than they are during non-recessions. This implies that a recession is frequently preceded by a lower yield rate.
+
+The link between yield rates and recession, however, is not always obvious. The plot demonstrates that there is some overlap between the red and blue lines, demonstrating that recessions are not always caused by low yield rates and economic expansions are not always caused by high yield rates. In conclusion, the kernel density plot offers valuable information for assessing the probability of recession by helping to illustrate the connection between yield rates and recession. We may assess the plot and determine the risk of a recession based on the present yield rate. However, the relationship between yield rates and recession is complex, and a single variable should not be used as the sole indicator of recession risk.
+
+### Using Machine Algorithm
+
+Conventional methods for estimating the risk of a recession, including yield curve analysis, rely on historical data and might not be sufficient for forecasting future recessions. Researchers are investigating machine learning's use in assessing the probability of a recession in light of recent breakthroughs in the field. The machine learning algorithms can analyze large amounts of data and identify complex relationships among various economic indicators that may be difficult to detect through traditional methods. Using a machine learning algorithm based on seven economic indices, I hope to evaluate the likelihood of recession in the U.S. economy between 1975 and 2021. (House Price Index, Stock Price Index, Consumer Price Index, GDP, Unemployment Rate, Disposable Income, and Mortgage Rate). Compared to the conventional yield curve analysis, this method offers a more thorough and precise way to evaluate the probability of recession.
+
+The code uses the Random Forest algorithm to predict the risk of recession by using the historical data of the seven economic indicators (House Price Index, Stock Price Index, Consumer Price Index, GDP, Unemployment Rate, Disposable Income, and Mortgage Rate). The code first preprocesses the historical data by cleaning and transforming it and then uses this data to train the Random Forest model. The training process involves dividing the historical data into two parts: a training dataset and a validation dataset. The model is trained on the training dataset, and its performance is evaluated on the validation dataset. This process ensures that the model can generalize well to new data and make accurate predictions. Once the model has been validated, it is deployed and used to make predictions on new data. In this case, the code loads a separate test data set from an Excel file, preprocesses the data in the same way as the training data, and makes predictions on the test data using the deployed model. The predictions made by the model are binary, i.e., they indicate whether a given period of time is at "Risk" or "No Risk" of recession based on the values of the seven economic indicators. The model makes these predictions by considering the relationship between the values of these indicators and the recession risk in the historical data used for training the model. In summary, the code uses the Random Forest algorithm and the historical data of seven economic indicators to predict the risk of recession in future periods. The code trains the model on the historical data, validates its performance, and then uses the deployed model to make predictions on new data.
+
+# Conclusion
+
+In this project, I have explored the US economic trends through time-series graphs and verified various economic theories and models. The primary objective was to determine the risk of a recession in the US economy by applying two different techniques; yield curve and machine algorithm. Using the ggplot library in R, I created line graphs for a number of economic indicators, including the House Price Index, Stock Price Index, Consumer Price Index, Unemployment Rate, GDP, Mortgage Rate, and Disposable Income. In addition, I examined the connections between several economic indicators to verify the validity of multiple economic theories and models.
+
+The results of my analysis showed that the yield curve is a reliable method for predicting a recession, but the machine algorithm was more accurate in assessing the risk of a recession. The caret and randomForest packages in R were used to create the Random Forest algorithm, which used seven economic indices to make forecasts about the US economy. Compared to the yield curve approach, this research gave a more thorough assessment of the US economy. However, the results from this analysis suggest that this machine learning algorithm is far from being able to accurately predict the risk of a recession and ineffective at its current state.
+
+In conclusion, this project has provided a comprehensive understanding of the US economy and the risk of a recession. I have been able to anticipate the state of the US economy using time-series graphs and machine learning. Policymakers and organizations can utilize the results of this analysis to make better-informed decisions.
+
+## 
+
+Limitations and Challenges Encountered
+
+During the course of my project on recession risk assessment, I encountered a number of challenges. First, a significant obstacle was the unavailability of comprehensive data for the years 1975 to 2021. As a result, my analysis' precision was limited, and it was challenging to draw reliable conclusions regarding the status of the U.S.economy. Secondly, the complexity of predicting a recession was another obstacle that I encountered. The complexity of economic systems and the number of variables that affect a recession made it challenging to create an accurate forecast model. Another challenge I encountered was a lack of economics expertise. I still had trouble properly grasping the fundamental ideas and models of the US economy despite my substantial research and study. Despite these obstacles, I was still able to gain valuable insights into the state of the U.S. economy through my analysis. However, there are still many challenges and weaknesses that remain in the field of recession risk assessment. Many programs and machine algorithms have failed to accurately predict recessions, highlighting the difficulty of this task. Moving forward, I believe that further research and collaboration between economists, data scientists, and machine learning experts will be essential to improve the accuracy of recession prediction models.
+
+Despite having access to various economic indicators and data, some of the coding and prediction processes were complex and beyond my current skill level. My inadequate understanding of economics also made it difficult for me to completely comprehend the connections between economic indicators and the risk of a recession.
+
+Furthermore, it is important to acknowledge that not all recession risk assessment methods or machine algorithms are successful. In my own analysis, I encountered failed code and models that did not provide accurate predictions. Despite these setbacks, I believe that it is still valuable to continue exploring and refining these methods to improve our understanding and ability to predict economic recessions.
+
+# Reference
